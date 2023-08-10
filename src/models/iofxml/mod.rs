@@ -6,6 +6,7 @@ use serde_derive::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Event {
+    pub id: Option<Vec<Id>>,
     pub name: String,
     pub start_time: Option<StartTime>,
     pub official: Option<Vec<Official>>,
