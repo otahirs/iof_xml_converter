@@ -9,6 +9,14 @@ pub struct Event {
     pub name: String,
     pub start_time: Option<StartTime>,
     pub official: Option<Vec<Official>>,
+    pub race: Option<Race>
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct Race {
+    pub race_number: Option<i32>,
+    pub name: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

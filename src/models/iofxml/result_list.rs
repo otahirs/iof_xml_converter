@@ -57,6 +57,8 @@ pub struct TeamMemberResult {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Result {
+    #[serde(rename = "@raceNumber")]
+    pub race_number: Option<String>,
     pub leg: Option<i16>,
     pub bib_number: Option<String>,
     pub start_time: Option<String>,
