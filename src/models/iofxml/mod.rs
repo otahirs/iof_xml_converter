@@ -81,7 +81,8 @@ pub struct Id {
 #[serde(rename_all = "PascalCase")]
 pub struct Person {
     pub id: Option<Vec<Id>>,
-    pub name: Name
+    pub name: Name,
+    pub nationality: Option<Nationality>
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -103,6 +104,15 @@ pub struct Organisation {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Country {
+    #[serde(rename = "@code")]
+    pub code: Option<String>,
+    #[serde(rename = "$value")]
+    pub value: Option<String>
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct Nationality {
     #[serde(rename = "@code")]
     pub code: Option<String>,
     #[serde(rename = "$value")]
