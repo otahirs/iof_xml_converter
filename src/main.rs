@@ -2,11 +2,12 @@ use std::fs::File;
 use std::io::{BufReader, Write};
 use std::path::PathBuf;
 use clap::Parser;
+use regex::Regex;
 use crate::models::iofxml::result_list::{PersonResult, ResultList};
 use tracing::warn;
+use crate::models::iofxml;
 
 mod models;
-
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
@@ -47,15 +48,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 entry_id: team.entry_id.clone(),
                 person,
                 organisation: team.organisation.clone().and_then(|o| o.into_iter().next()),
-                result: team_member.result
+                result: iofxml::result_list::Result {
+                    leg: None,
+                    bib_number: team.bib_number.clone(),
+                    ..team_member.result
+                }
             })
         }
         class.person_result = class_person_results;
         class.team_result = vec![];
     }
 
-    let res = quick_xml::se::to_string(&xml)?;
-    File::create(args.output)?.write_all(res.as_bytes())?;
+    let mut res = quick_xml::se::to_string(&xml)?;
+
+    let re = Regex::new(r#"<\w*/>"#).unwrap(); // empty elements <Foo/>
+    res = re.replace_all(&res, "").to_string(); // remove empty elements
+
+    File::create(args.output)?
+        .write_all(res.as_bytes())?;
 
     Ok(())
 }

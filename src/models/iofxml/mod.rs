@@ -7,14 +7,30 @@ use serde_derive::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase")]
 pub struct Event {
     pub name: String,
+    pub start_time: Option<StartTime>,
+    pub official: Option<Vec<Official>>,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct Official {
+    #[serde(rename = "@type")]
+    pub official_type: Option<String>,
+    pub person: Option<Person>,
+}
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct StartTime {
+    pub date: String,
+    pub time: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Class {
+    pub id: Option<String>,
     pub name: String,
     pub short_name: Option<String>,
-    pub id: Option<String>
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -56,8 +72,8 @@ pub struct Id {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Person {
-    pub name: Name,
-    pub id: Option<Vec<Id>>
+    pub id: Option<Vec<Id>>,
+    pub name: Name
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -70,6 +86,17 @@ pub struct Name {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Organisation {
-    pub short_name: Option<String>,
+    pub id: Option<Vec<Id>>,
     pub name: Option<String>,
+    pub short_name: Option<String>,
+    pub country: Option<Country>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct Country {
+    #[serde(rename = "@code")]
+    pub code: Option<String>,
+    #[serde(rename = "$value")]
+    pub value: Option<String>
 }

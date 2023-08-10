@@ -4,6 +4,14 @@ use serde_derive::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ResultList {
+    #[serde(rename = "@createTime")]
+    pub create_time: Option<String>,
+    #[serde(rename = "@creator")]
+    pub creator: Option<String>,
+    #[serde(rename = "@iofVersion")]
+    pub iof_version: Option<String>,
+    #[serde(rename = "@status")]
+    pub status: Option<String>,
     pub event: Event,
     pub class_result: Vec<ClassResult>,
 }
@@ -32,7 +40,7 @@ pub struct PersonResult {
 #[serde(rename_all = "PascalCase")]
 pub struct TeamResult {
     pub entry_id: Option<String>,
-    pub bib_number: Option<i32>,
+    pub bib_number: Option<String>,
     pub name: String,
     pub organisation: Option<Vec<Organisation>>,
     #[serde(default)]
@@ -54,6 +62,8 @@ pub struct Result {
     pub start_time: Option<String>,
     pub finish_time: Option<String>,
     pub time: Option<f32>,
+    pub time_behind: Option<f32>,
+    pub position: Option<i32>,
     pub status: Option<String>,
     pub split_time: Option<Vec<SplitTime>>,
     pub control_card: Option<i32>
